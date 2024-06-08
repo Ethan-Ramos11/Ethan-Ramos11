@@ -1,0 +1,28 @@
+name: Update README with Latest Blog Posts
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # This runs the script every hour; adjust it as needed.
+  workflow_dispatch:  # Allows you to run the action manually from GitHub UI.
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Fetch latest blog posts
+      uses: gautamkrishnar/blog-post-workflow@master
+      with:
+        feed_list: "https://ethanramos.substack.com/feed"
+        readme_path: "README.md"
+        max_post_count: 5
+        template: "- [{{title}}]({{url}})\n"
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.ddress is visible to recipients. Make sure you're logged in to the service and check your settings there.
+        git commit -am "Updated README with the latest blog posts from Substack" || echo "No changes to commit"
+        git push
