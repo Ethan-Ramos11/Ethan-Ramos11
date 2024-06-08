@@ -25,23 +25,15 @@ jobs:
 
     - name: Fetch and process the latest Substack posts
       run: |
-        import feedparser
-
-        # Parse Substack RSS feed
-        feed = feedparser.parse('https://ethanramos.substack.com/feed')
-
-        # Prepare the new README section
-        new_content = '# Latest Blog Posts\\n'
-        for entry in feed.entries[:5]:  # Get the top 5 entries
-            new_content += f"- [{entry.title}]({entry.link}) - {entry.published}\\n"
-
-        # Read the existing README
-        with open('README.md', 'r') as file:
-            content = file.read()
-
-        # Write the new README
-        with open('README.md', 'w') as file:
-            file.write(new_content + '\\n' + content)
+        python -c "import feedparser; \
+        feed = feedparser.parse('https://ethanramos.substack.com/feed'); \
+        new_content = '# Latest Blog Posts\\n'; \
+        for entry in feed.entries[:5]: \
+            new_content += f'- [{entry.title}]({entry.link}) - {entry.published}\\n'; \
+        with open('README.md', 'r') as file: \
+            content = file.read(); \
+        with open('README.md', 'w') as file: \
+            file.write(new_data + '\\n' + content);"
 
     - name: Commit and push if changed
       run: |
