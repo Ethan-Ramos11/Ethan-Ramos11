@@ -33,7 +33,7 @@ jobs:
         with open('README.md', 'r') as file: \
             content = file.read(); \
         with open('README.md', 'w') as file: \
-            file.write(new_data + '\\n' + content);"
+            file.write(new_content + '\\n' + content);"
 
     - name: Commit and push if changed
       run: |
