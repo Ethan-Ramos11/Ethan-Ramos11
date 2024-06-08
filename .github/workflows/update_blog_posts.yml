@@ -32,9 +32,8 @@ jobs:
             new_content += f'- [{entry.title}]({entry.link}) - {entry.published}\\n'; \
         with open('README.md', 'r') as file: \
             content = file.read(); \
-        with open('README.md', 'w') as file: \
-            file.write(new_content + '\\n' + content);"
-
+        with open('README and_content + '\\n' + mdown.md', 'w') as file: \
+            file.write(new_content + '\\n' + content)"
     - name: Commit and push if changed
       run: |
         git config --global user.email "action@github.com"
