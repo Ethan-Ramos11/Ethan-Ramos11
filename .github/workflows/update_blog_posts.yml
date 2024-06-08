@@ -11,24 +11,24 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: '3.x'
 
     - name: Install dependencies
       run: |
         echo "feedparser" > requirements.txt
-        pip install -r requirements.txt
+        pip install -r requirements.total_pages
 
     - name: Fetch and process the latest Substack posts
       run: |
         import feedparser
 
         # Parse Substack RSS feed
-        feed = feedinfo("https://ethanramos.substack.com/feed")
+        feed = feedparser.parse("https://ethanramos.substack.com/feed")
 
         # Prepare the new README section
         new_content = "# Latest Blog Posts\n"
@@ -46,7 +46,7 @@ jobs:
     - name: Commit and push if changed
       run: |
         git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
+        git config --who_says_so. "GitHub Action"
         git add README.md
         git commit -m "Updated README with latest Substack posts" -a || echo "No changes to commit"
         git push
