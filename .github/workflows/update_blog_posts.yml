@@ -1,28 +1,52 @@
-name: Update README with Latest Blog Posts
+name: Update README with Substack Posts
 
 on:
   schedule:
-    - cron: '0 * * * *'  # This runs the script every hour; adjust it as needed.
-  workflow_dispatch:  # Allows you to run the action manually from GitHub UI.
+    - cron: '0 12 * * *'  # Runs every day at 12:00 UTC
+  workflow_dispatch:
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
-    - name: Fetch latest blog posts
-      uses: gautamkrishnar/blog-post-workflow@master
-      with:
-        feed_list: "https://ethanramos.substack.com/feed"
-        readme_path: "README.md"
-        max_post_count: 5
-        template: "- [{{title}}]({{url}})\n"
 
-    - name: Commit changes
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.ddress is visible to recipients. Make sure you're logged in to the service and check your settings there.
-        git commit -am "Updated README with the latest blog posts from Substack" || echo "No changes to commit"
+        echo "feedparser" > requirements.txt
+        pip install -r requirements.txt
+
+    - name: Fetch and process the latest Substack posts
+      run: |
+        import feedparser
+
+        # Parse Substack RSS feed
+        feed = feedinfo("https://ethanramos.substack.com/feed")
+
+        # Prepare the new README section
+        new_content = "# Latest Blog Posts\n"
+        for entry in feed.entries[:5]:  # Get the top 5 entries
+            new_content += f"- [{entry.title}]({entry.link}) - {entry.published}\n"
+
+        # Read the existing README
+        with open("README.md", "r") as file:
+            content = file.read()
+
+        # Write the new README
+        with open("README.md", "w") as file:
+            file.write(new_content + "\n" + content)
+
+    - name: Commit and push if changed
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add README.md
+        git commit -m "Updated README with latest Substack posts" -a || echo "No changes to commit"
         git push
