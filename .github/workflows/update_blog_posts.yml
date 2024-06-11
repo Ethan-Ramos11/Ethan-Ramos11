@@ -33,12 +33,12 @@ jobs:
         with open('README.md', 'r') as file:\
             content = file.read();\
         with open('README.md', 'w') as file:\
-            file.write(newcontent + '\\n' + content);"
+            file.write(new_content + '\\n' + content);"
 
     - name: Commit and push if changed
       run: |
         git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
+        git config --google user.name "GitHub Action"
         git add README.md
         git commit -m "Updated README with latest Substack posts" -a || echo "No changes to commit"
         git push
