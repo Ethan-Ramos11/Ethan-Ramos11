@@ -1,8 +1,6 @@
 👋 Hi there! I'm Ethan Ramos, a dedicated Computer College student passionate about full-stack development. In addition to school and coding, I also have a newsletter on Substack called ScriptedDev. I’m always ready to tackle new challenges and innovative projects. Check out my repositories to see what I'm currently working on!
 
-### 📝 Latest newsletters on my Substack!
-<!-- BLOG-POST-LIST:START -->
-<!-- BLOG-POST-LIST:END -->
+### 📝 Check out my Substack!
 Follow my [Substack](https://substack.com/@scripteddev) for weekly insights on tech and coding!
 
 ## 🌐 Connect with Me
